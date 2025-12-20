@@ -57,13 +57,30 @@ function soft_clustering(k, stiffness){
         i += 1
     }
     // console.log(HM)
-    softAssignColors(HM)
+    softAssignColors(HM, k)
     return centers
 }
 
-function softAssignColors(HM){
-    console.log(HM)
-    // TODO figure out color interpolation
+function softAssignColors(HM, k){
+    points.forEach((point, p) => {
+        circle = svg.getElementById(`point-${point}`)
+        color = [0, 0, 0, 1]
+        for(let i=0; i<k; i++){
+            t = HM[i][p]
+            color = interpolateColors(color, colors[i], t)
+        }
+        circle.setAttributeNS(null, 'fill', `rgb(${color[0]},${color[1]},${color[2]},${color[3]})`)
+    })
+}
+
+// interpolate rgb colors
+function interpolateColors(color, newColor, t){
+    console.log(color, newColor)
+    recolor = [0,0,0,1]
+    for(let i=0; i<3; i++){
+        recolor[i] = (color[i] * (1-t)) + (newColor[i] * t)
+    }
+    return recolor
 }
 
 // console.log(soft_clustering(3, 0.5, [[1,2], [2,3], [4,5], [3,2], [9,0], [0,0], [0,7.64], [10, 294.4], [9.0, 299.4]]))

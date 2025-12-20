@@ -52,7 +52,7 @@ function assignColors(clusters){
     clusters.forEach((cluster, i) => {
         cluster.forEach(point => {
             circle = svg.getElementById(`point-${point}`)
-            circle.setAttributeNS(null, 'fill', colors[i])
+            circle.setAttributeNS(null, 'fill', `rgba(${colors[i]})`)
         })
     })
 }

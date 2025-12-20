@@ -1,7 +1,7 @@
 var svgns = "http://www.w3.org/2000/svg"
 var points = []
 // support 5 colors for 5 clusters
-var colors = ["#ff00a6", "#0091ffff", "#f6ff00ff", "#ff0011ff", "#00ff37ff"]
+var colors = [[255, 0, 166, 1], [0, 145, 255, 1], [246, 255, 0, 1], [255, 0, 17, 1], [0, 255, 55, 1]]
 var svg
 
 window.onload = function() {
@@ -29,6 +29,6 @@ function drawPoint(event){
         circle.setAttributeNS(null, 'id', `point-${coords}`)
         svg.appendChild(circle);
     }
-    // soft_clustering(5, 0.2)
-    lloyd(5)
+    soft_clustering(2, 0.2)
+    // lloyd(5)
 }
