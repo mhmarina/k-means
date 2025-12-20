@@ -75,7 +75,6 @@ function softAssignColors(HM, k){
 
 // interpolate rgb colors
 function interpolateColors(color, newColor, t){
-    console.log(color, newColor)
     recolor = [0,0,0,1]
     for(let i=0; i<3; i++){
         recolor[i] = (color[i] * (1-t)) + (newColor[i] * t)

@@ -3,10 +3,30 @@ var points = []
 // support 5 colors for 5 clusters
 var colors = [[255, 0, 166, 1], [0, 145, 255, 1], [246, 255, 0, 1], [255, 0, 17, 1], [0, 255, 55, 1]]
 var svg
+var clusterType = "hard"
+var k = 2
+var stiffness = 0.2
 
 window.onload = function() {
-  svg = document.getElementById("main-svg");
-  svg.addEventListener("click", drawPoint)
+    svg = document.getElementById("main-svg");
+    svg.addEventListener("click", drawPoint)
+    clusterTypeRadios = this.document.getElementsByName("cluster-type")
+    clusterTypeRadios.forEach(button => {button.addEventListener("click", () => {
+        clusterType = button.id
+        cluster()
+    })})
+    kSlider = this.document.getElementById("k")
+    kSlider.addEventListener("change", () => {
+        k = kSlider.value
+        this.document.getElementById("k-label").textContent = `k: ${k}`
+        cluster()
+    })
+    stiffnessSlider = this.document.getElementById("stiffness")
+    stiffnessSlider.addEventListener("change", () => {
+        stiffness = stiffnessSlider.value
+        this.document.getElementById("stiffness-label").textContent = `stiffness: ${stiffness}`
+        cluster()
+    })
 }
 
 function addPoint(point){
@@ -28,7 +48,17 @@ function drawPoint(event){
         circle.setAttributeNS(null, 'fill', colors[0])
         circle.setAttributeNS(null, 'id', `point-${coords}`)
         svg.appendChild(circle);
+
+        // call clustering algorithm
+        cluster()
     }
-    soft_clustering(2, 0.2)
-    // lloyd(5)
+}
+
+function cluster(){
+    if(clusterType == "hard"){
+        lloyd(k)
+    }
+    else{
+        soft_clustering(k, stiffness)
+    }
 }
