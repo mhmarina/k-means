@@ -39,16 +39,22 @@ def maximize(k, points, HM, m):
 def soft_clustering(k, m , stiffness, points):
     # expect
     HM = [[1/k for _ in range(len(points))] for _ in range(k)] # H[i][j] = responsibiliy of center i on point j
-                                                             # HM = Forcei,j / Sum of all center's forces
+                                                            # HM = Forcei,j / Sum of all center's forces
                                                              # Forcei,j = e^(-stiffness*distance(dataj, centeri))
     # centers = points[:k]
     centers = random.sample(points, k)
     i = 0
-    while i <= 100:
+    while i <= 20:
         expect(HM, centers, points, stiffness, m)
         new_centers = maximize(k, points, HM, m)
         if new_centers == centers:
             break
         centers = new_centers
         i += 1
+    # for row in HM:
+    #     print(row)
     return centers
+
+# centers = soft_clustering(3, 2, 0.5,[[1,2], [2,3], [4,5], [3,2], [9,0], [0,0], [0,7.64], [10, 294.4], [9.0, 299.4]])
+# for center in centers:
+#     print(center)

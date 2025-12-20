@@ -45,3 +45,7 @@ def lloyd(k, m, points):
     #     for i in range(m):
     #         center[i] = round(center[i], 3)
     return centers
+
+# centers = lloyd(2, 2, [[1,2], [2,3], [4,5], [3,2], [9,0], [0,0], [0,7.64], [54.6, 294.4], [49.0, 6.4]])
+# for center in centers:
+#     print(center)
