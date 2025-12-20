@@ -1,5 +1,5 @@
 // m is always 2
-function lloyd(k, points){
+function lloyd(k){
     //initialize random centers
     centers = randoSequence(points).slice(-k).map((i) => i.value);
     it = 0

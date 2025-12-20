@@ -41,7 +41,7 @@ function maximize(k, points, HM){
     return newCenters;
 }
 
-function soft_clustering(k, stiffness, points){
+function soft_clustering(k, stiffness){
     let HM = Array.from({ length: k }, () =>
         Array(points.length).fill(1 / k)
     )
