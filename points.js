@@ -20,7 +20,7 @@ function addPoint(point){
 
 function drawPoint(event){
     let coords = [event.pageX, event.pageY]
-    if(addPoint([event.x, event.y])){
+    if(addPoint(coords)){
         let circle = document.createElementNS(svgns, 'circle');
         circle.setAttributeNS(null, 'cx', coords[0]);
         circle.setAttributeNS(null, 'cy', coords[1]);
@@ -29,4 +29,6 @@ function drawPoint(event){
         circle.setAttributeNS(null, 'id', `point-${coords}`)
         svg.appendChild(circle);
     }
+    // soft_clustering(5, 0.2)
+    lloyd(5)
 }

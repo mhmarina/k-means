@@ -57,7 +57,13 @@ function soft_clustering(k, stiffness){
         i += 1
     }
     // console.log(HM)
+    softAssignColors(HM)
     return centers
+}
+
+function softAssignColors(HM){
+    console.log(HM)
+    // TODO figure out color interpolation
 }
 
 // console.log(soft_clustering(3, 0.5, [[1,2], [2,3], [4,5], [3,2], [9,0], [0,0], [0,7.64], [10, 294.4], [9.0, 299.4]]))

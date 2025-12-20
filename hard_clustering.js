@@ -44,7 +44,17 @@ function lloyd(k){
         centers = new_centers
         it += 1
     }
+    assignColors(clusters)
     return centers
+}
+
+function assignColors(clusters){
+    clusters.forEach((cluster, i) => {
+        cluster.forEach(point => {
+            circle = svg.getElementById(`point-${point}`)
+            circle.setAttributeNS(null, 'fill', colors[i])
+        })
+    })
 }
 
 // console.log(lloyd(2, [[1,2], [2,3], [4,5], [3,2], [9,0], [0,0], [0,7.64], [54.6, 294.4], [49.0, 6.4]]))
