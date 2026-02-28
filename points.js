@@ -6,6 +6,7 @@ var svg
 var clusterType = "hard"
 var k = 2
 var stiffness = 0.2
+var centers = []
 
 window.onload = function() {
     svg = document.getElementById("main-svg");
@@ -54,11 +55,29 @@ function drawPoint(event){
     }
 }
 
+function drawCenters(centers){
+    const existingCenters = document.getElementsByClassName('center')
+    Array.from(existingCenters).forEach((c) => c.remove())
+    centers.forEach((c) => {
+        if(c.length > 0){
+            let center = document.createElementNS(svgns, 'rect')
+            center.setAttributeNS(null, 'class', 'center')
+            center.setAttributeNS(null, 'x', c[0])
+            center.setAttributeNS(null, 'y', c[1])
+            center.setAttributeNS(null, 'width', 5)
+            center.setAttributeNS(null, 'height', 5)
+            center.setAttributeNS(null, 'fill', 'white')
+            svg.appendChild(center)
+        }
+    })
+}
+
 function cluster(){
     if(clusterType == "hard"){
-        lloyd(k)
+        centers = lloyd(k)
     }
     else{
-        soft_clustering(k, stiffness)
+        centers = soft_clustering(k, stiffness)
     }
+    drawCenters(centers)
 }
