@@ -1,8 +1,10 @@
 // m is always 2
 function lloyd(k){
     //initialize random centers
-    centers = randoSequence(points).slice(-k).map((i) => i.value);
-    it = 0
+    let centers = randoSequence(points).slice(-k).map((i) => i.value);
+    let it = 0
+    let clusters = []
+
     while(it <= 20){
         clusters = []
         for(i = 0; i < k; i++){
@@ -23,8 +25,8 @@ function lloyd(k){
 
         // compute new centers (of gravity) for each cluster
         // sum of dimension / order of dimension
-        new_centers = []
-        for(i = 0; i < k; i++){
+        var new_centers = []
+        for(let i = 0; i < k; i++){
             new_centers.push([])
         }
         clusters.forEach((cluster, i) => {
@@ -41,11 +43,28 @@ function lloyd(k){
         if(new_centers == centers){
             break
         }
-        centers = new_centers
         it += 1
     }
+    centers = new_centers
+
+    // calculate max distance from each center to datapoint
+    // for each cluster
+    let maxDists = []
+    for(let i = 0; i < k; i++){
+        let max = -1
+        const cluster = clusters[i]
+        const center = centers[i]
+        for(j = 0; j < cluster.length; j++){
+            point = cluster[j]
+            dist = Math.sqrt((Math.pow((center[0] - point[0]),2) + Math.pow((center[1] - point[1]),2)))
+            if(dist > max){
+                max = dist
+            }
+        }
+        maxDists.push(max)
+    }
     assignColors(clusters)
-    return centers
+    return [centers, maxDists]
 }
 
 function assignColors(clusters){

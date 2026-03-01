@@ -55,29 +55,45 @@ function drawPoint(event){
     }
 }
 
-function drawCenters(centers){
+function drawCenters(centers, radii){
     const existingCenters = document.getElementsByClassName('center')
     Array.from(existingCenters).forEach((c) => c.remove())
-    centers.forEach((c) => {
+    centers.forEach((c, i) => {
         if(c.length > 0){
-            let center = document.createElementNS(svgns, 'rect')
+            const center = document.createElementNS(svgns, 'rect')
             center.setAttributeNS(null, 'class', 'center')
             center.setAttributeNS(null, 'x', c[0])
             center.setAttributeNS(null, 'y', c[1])
             center.setAttributeNS(null, 'width', 5)
             center.setAttributeNS(null, 'height', 5)
-            center.setAttributeNS(null, 'fill', 'white')
+            center.setAttributeNS(null, 'fill', 'white')            
             svg.appendChild(center)
+            // draw radii   
+            if(radii !== null){
+                const rangeCirlce = document.createElementNS(svgns, 'circle')
+                let color = colors[i].slice()
+                color[3] = 0.1
+                rangeCirlce.setAttributeNS(null, 'class', 'center')
+                rangeCirlce.setAttributeNS(null, 'cx', c[0]);
+                rangeCirlce.setAttributeNS(null, 'cy', c[1]);
+                rangeCirlce.setAttributeNS(null, 'r', radii[i]);
+                rangeCirlce.setAttributeNS(null, 'fill', `rgba(${color})`)
+                svg.appendChild(rangeCirlce);                
+            }
         }
     })
 }
 
+
 function cluster(){
     if(clusterType == "hard"){
-        centers = lloyd(k)
+        ret = lloyd(k)
+        centers = ret[0]
+        radii = ret[1]
     }
     else{
         centers = soft_clustering(k, stiffness)
+        radii = null
     }
-    drawCenters(centers)
+    drawCenters(centers, radii)
 }
