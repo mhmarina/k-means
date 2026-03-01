@@ -5,16 +5,17 @@ function lloyd(k){
     let it = 0
     let clusters = []
 
-    while(it <= 20){
+    while(it <= 200){
         clusters = []
-        for(i = 0; i < k; i++){
+        for(let i = 0; i < k; i++){
             clusters.push([])
         }
+
         points.forEach(point => {
-            min_dist = Number.MAX_SAFE_INTEGER
-            min_center_index = -1
+            let min_dist = Number.MAX_SAFE_INTEGER
+            let min_center_index = -1
             centers.forEach((center, i) => {
-                dist = Math.sqrt((Math.pow((center[0] - point[0]),2) + Math.pow((center[1] - point[1]),2)))
+                let dist = Math.sqrt((Math.pow((center[0] - point[0]),2) + Math.pow((center[1] - point[1]),2)))
                 if(dist < min_dist){
                     min_dist = dist
                     min_center_index = i
@@ -29,10 +30,11 @@ function lloyd(k){
         for(let i = 0; i < k; i++){
             new_centers.push([])
         }
+
         clusters.forEach((cluster, i) => {
             if(cluster.length > 0){
-                sum_x = 0
-                sum_y = 0
+                let sum_x = 0
+                let sum_y = 0
                 cluster.forEach(point => {
                     sum_x += point[0]
                     sum_y += point[1]
@@ -40,12 +42,12 @@ function lloyd(k){
                 new_centers[i] = ([sum_x/cluster.length, sum_y/cluster.length])
             }
         })
-        if(new_centers == centers){
+        if(new_centers === centers){
             break
         }
+        centers = new_centers
         it += 1
     }
-    centers = new_centers
 
     // calculate max distance from each center to datapoint
     // for each cluster
@@ -54,9 +56,9 @@ function lloyd(k){
         let max = -1
         const cluster = clusters[i]
         const center = centers[i]
-        for(j = 0; j < cluster.length; j++){
-            point = cluster[j]
-            dist = Math.sqrt((Math.pow((center[0] - point[0]),2) + Math.pow((center[1] - point[1]),2)))
+        for(let j = 0; j < cluster.length; j++){
+            let point = cluster[j]
+            let dist = Math.sqrt((Math.pow((center[0] - point[0]),2) + Math.pow((center[1] - point[1]),2)))
             if(dist > max){
                 max = dist
             }

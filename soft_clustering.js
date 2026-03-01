@@ -31,7 +31,7 @@ function maximize(k, points, HM){
         rowSum = row.reduce((a, b) => a + b)
 
         for (let j=0; j<2; j++) {
-            weighted = 0
+            let weighted = 0
             for (let p=0; p <points.length; p++) {
                 weighted += row[p] * points[p][j]
             }
@@ -47,10 +47,10 @@ function soft_clustering(k, stiffness){
     )
     let centers = randoSequence(points).slice(-k).map((i) => i.value);
     let i = 0
-    while(i <= 20){
+    while(i <= 200){
         HM = expect(HM, centers, points, stiffness)
         let newCenters = maximize(k, points, HM)
-        if(newCenters == centers){
+        if(newCenters === centers){
             break
         }
         centers = newCenters
