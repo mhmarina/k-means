@@ -2,7 +2,7 @@ function expect(HM, centers, points, stiffness){
     let totals = Array.from({length: points.length}, ()=>0)
     for(let i=0; i<centers.length; i++){
         for (j=0; j<points.length; j++){
-            distance =  Math.sqrt((Math.pow((centers[i][0] - points[j][0]),2) + Math.pow((centers[i][1] - points[j][1]),2)))
+            distance =  fn_distance(points[j], centers[i])
             force = Math.pow(Math.E, -stiffness*distance)
             HM[i][j] = force
         }
@@ -45,9 +45,9 @@ function soft_clustering(k, stiffness){
     let HM = Array.from({ length: k }, () =>
         Array(points.length).fill(1 / k)
     )
-    let centers = randoSequence(points).slice(-k).map((i) => i.value);
+    let centers = initializePoints(points, k)
     let i = 0
-    while(i <= 200){
+    while(i <= 20){
         HM = expect(HM, centers, points, stiffness)
         let newCenters = maximize(k, points, HM)
         if(newCenters === centers){

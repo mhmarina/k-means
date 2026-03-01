@@ -1,11 +1,11 @@
 // m is always 2
 function lloyd(k){
     //initialize random centers
-    let centers = randoSequence(points).slice(-k).map((i) => i.value);
+    let centers = initializePoints(points, k)
     let it = 0
     let clusters = []
 
-    while(it <= 200){
+    while(it <= 20){
         clusters = []
         for(let i = 0; i < k; i++){
             clusters.push([])
@@ -15,7 +15,7 @@ function lloyd(k){
             let min_dist = Number.MAX_SAFE_INTEGER
             let min_center_index = -1
             centers.forEach((center, i) => {
-                let dist = Math.sqrt((Math.pow((center[0] - point[0]),2) + Math.pow((center[1] - point[1]),2)))
+                let dist = fn_distance(center, point)
                 if(dist < min_dist){
                     min_dist = dist
                     min_center_index = i
@@ -58,7 +58,7 @@ function lloyd(k){
         const center = centers[i]
         for(let j = 0; j < cluster.length; j++){
             let point = cluster[j]
-            let dist = Math.sqrt((Math.pow((center[0] - point[0]),2) + Math.pow((center[1] - point[1]),2)))
+            let dist = fn_distance(center,point)
             if(dist > max){
                 max = dist
             }
