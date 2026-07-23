@@ -8,9 +8,9 @@ var k = 2
 var stiffness = 0.2
 var centers = []
 
-window.onload = function() {
+window.addEventListener('load', () => {
     svg = document.getElementById("main-svg");
-    svg.addEventListener("click", drawPoint)
+    svg.addEventListener("click", drawPointEvent)
     clusterTypeRadios = this.document.getElementsByName("cluster-type")
     clusterTypeRadios.forEach(button => {button.addEventListener("click", () => {
         clusterType = button.id
@@ -28,7 +28,7 @@ window.onload = function() {
         this.document.getElementById("stiffness-label").textContent = `stiffness: ${stiffness}`
         cluster()
     })
-}
+})
 
 function addPoint(point){
     let len = points.length
@@ -39,8 +39,11 @@ function addPoint(point){
     return len !== points.length
 }
 
-function drawPoint(event){
-    let coords = [event.pageX, event.pageY]
+function drawPointEvent(event){
+     drawPoint([event.pageX, event.pageY])
+}
+
+function drawPoint(coords){
     if(addPoint(coords)){
         let circle = document.createElementNS(svgns, 'circle');
         circle.setAttributeNS(null, 'cx', coords[0]);
@@ -48,6 +51,7 @@ function drawPoint(event){
         circle.setAttributeNS(null, 'r', 5);
         circle.setAttributeNS(null, 'fill', colors[0])
         circle.setAttributeNS(null, 'id', `point-${coords}`)
+        circle.setAttributeNS(null, 'class', 'point')
         svg.appendChild(circle);
 
         // call clustering algorithm
@@ -66,7 +70,7 @@ function drawCenters(centers, radii){
             center.setAttributeNS(null, 'y', c[1])
             center.setAttributeNS(null, 'width', 5)
             center.setAttributeNS(null, 'height', 5)
-            center.setAttributeNS(null, 'fill', 'white')            
+            center.setAttributeNS(null, 'fill', 'white')  
             svg.appendChild(center)
             // draw radii   
             if(radii !== null){
@@ -96,4 +100,11 @@ function cluster(){
         radii = null
     }
     drawCenters(centers, radii)
+}
+
+function clearPoints(){
+    points = []
+    // clean canvas:
+    document.querySelectorAll('.point').forEach(e => e.remove())
+    document.querySelectorAll('.center').forEach(e => e.remove())
 }
