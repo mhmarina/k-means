@@ -1,4 +1,6 @@
-window.onload = function(){
+const toyDataPath = "data/cluster_data.csv" //https://www.kaggle.com/datasets/saquib7hussain/k-mean-cluster-dataset
+
+window.addEventListener('load', () => {
     const clearBtn = document.getElementById("btn-clear")
     const loadToyBtn = document.getElementById("btn-load-toy")
     const loadDataBtn = document.getElementById("btn-load-file")
@@ -6,16 +8,16 @@ window.onload = function(){
     clearBtn.addEventListener("click", clearData)
     loadToyBtn.addEventListener("click", loadToyData)
     loadDataBtn.addEventListener("click", loadData)
-}
+})
 
 function clearData(){
-    console.log("Clear!")
+    clearPoints()
 }
 
 function loadToyData(){
-    console.log("Log Toy Data!")
+    clearData()
 }
 
 function loadData(){
-    console.log("Load Data!")
+    console.log("Log Data!")
 }
