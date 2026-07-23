@@ -71,7 +71,6 @@ function drawCenters(centers, radii){
             center.setAttributeNS(null, 'width', 5)
             center.setAttributeNS(null, 'height', 5)
             center.setAttributeNS(null, 'fill', 'white')  
-            center.setAttributeNS(null, 'class', 'center')          
             svg.appendChild(center)
             // draw radii   
             if(radii !== null){
@@ -83,7 +82,6 @@ function drawCenters(centers, radii){
                 rangeCirlce.setAttributeNS(null, 'cy', c[1]);
                 rangeCirlce.setAttributeNS(null, 'r', radii[i]);
                 rangeCirlce.setAttributeNS(null, 'fill', `rgba(${color})`)
-                rangeCirlce.setAttributeNS(null, 'class', 'radius')
                 svg.appendChild(rangeCirlce);                
             }
         }
@@ -109,5 +107,4 @@ function clearPoints(){
     // clean canvas:
     document.querySelectorAll('.point').forEach(e => e.remove())
     document.querySelectorAll('.center').forEach(e => e.remove())
-    document.querySelectorAll('.radius').forEach(e => e.remove())
 }

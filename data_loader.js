@@ -16,6 +16,23 @@ function clearData(){
 
 function loadToyData(){
     clearData()
+    toyDataFile = fetch(toyDataPath)
+                .then((res) => res.text())
+                .then((text) => {
+                    objects = parseCSV(text)
+                    objects.forEach((e) =>{
+                        drawPoint(e)
+                    })
+                })
+}
+
+function parseCSV(text){
+    const objects = text.replace(/[\r\t]+/g, "").split("\n")
+                .map((e) => {
+                let obj = e.split(",")
+                return [parseInt(obj[0]), parseInt(obj[1])]
+        })
+    return objects
 }
 
 function loadData(){
