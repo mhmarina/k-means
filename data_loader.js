@@ -4,6 +4,8 @@ const MAX_Y = 550
 const MIN_X = 20
 const MAX_X = 1200
 
+let toyData;
+
 window.addEventListener('load', () => {
     const clearBtn = document.getElementById("btn-clear")
     const loadToyBtn = document.getElementById("btn-load-toy")
@@ -12,6 +14,14 @@ window.addEventListener('load', () => {
     clearBtn.addEventListener("click", clearData)
     loadToyBtn.addEventListener("click", loadToyData)
     loadDataBtn.addEventListener("click", loadData)
+
+    // cache toy data
+    fetch(toyDataPath)
+                .then((res) => res.text())
+                .then((text) => {
+                    toyData = parseCSV(text)
+                })
+
 })
 
 function clearData(){
@@ -20,14 +30,9 @@ function clearData(){
 
 function loadToyData(){
     clearData()
-    toyDataFile = fetch(toyDataPath)
-                .then((res) => res.text())
-                .then((text) => {
-                    objects = parseCSV(text)
-                    objects.forEach((e) =>{
-                        drawPoint(e)
-                    })
-                })
+    toyData.forEach((e) =>{
+        drawPoint(e)
+    })
 }
 
 function parseCSV(text){
